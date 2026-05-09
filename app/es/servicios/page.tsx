@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 
 import PricingSection from "@/components/sections/pricing-section";
 import WorkflowSection from "@/components/sections/workflow-section";

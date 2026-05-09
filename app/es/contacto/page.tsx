@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { Navbar } from "@/components/layout/navbar";
-import { Footer } from "@/components/layout/footer";
+import Footer from "@/components/layout/footer";
 
 import ContactForm from "@/components/sections/contact-form";
 

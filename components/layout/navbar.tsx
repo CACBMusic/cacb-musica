@@ -3,9 +3,11 @@
 import Link from "next/link";
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Menu, X } from "lucide-react";
+
+import { createClient } from "@/lib/supabase-browser";
 
 const links = {
   es: [
@@ -58,7 +60,11 @@ const links = {
 export function Navbar() {
   const pathname = usePathname();
 
+  const supabase = createClient();
+
   const [open, setOpen] = useState(false);
+
+  const [user, setUser] = useState<any>(null);
 
   const locale = pathname.startsWith("/en")
     ? "en"
@@ -71,6 +77,24 @@ export function Navbar() {
       ? pathname.replace("/es", "/en")
       : pathname.replace("/en", "/es");
 
+  useEffect(() => {
+    async function getUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      setUser(user);
+    }
+
+    getUser();
+  }, []);
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+
+    location.href = "/";
+  }
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 px-4 py-4">
@@ -80,12 +104,12 @@ export function Navbar() {
             href={locale === "es" ? "/es" : "/en"}
             className="group flex items-center gap-3"
           >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 to-yellow-500 font-black text-black shadow-lg shadow-orange-500/20 transition duration-300 group-hover:scale-105">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 to-yellow-500 font-black text-black">
               C
             </div>
 
             <div>
-              <p className="text-lg font-black tracking-tight text-white">
+              <p className="text-lg font-black text-white">
                 CACB Música
               </p>
 
@@ -105,7 +129,7 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-300 ${
+                  className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
                     active
                       ? "bg-white text-black"
                       : "text-zinc-300 hover:bg-white/10 hover:text-white"
@@ -117,32 +141,50 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Right Side */}
+          {/* Right */}
           <div className="hidden items-center gap-3 lg:flex">
-            {/* Language */}
+            {/* Lang */}
             <Link
               href={switchLocale}
-              className="rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-zinc-300 transition hover:border-orange-500 hover:text-orange-400"
+              className="rounded-full border border-white/10 px-4 py-2 text-sm text-zinc-300"
             >
               {locale === "es" ? "EN" : "ES"}
             </Link>
 
-            {/* CTA */}
-            <Link
-              href={
-                locale === "es"
-                  ? "/es/contacto"
-                  : "/en/contact"
-              }
-              className="rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 px-6 py-3 text-sm font-bold text-black transition duration-300 hover:scale-105"
-            >
-              {locale === "es"
-                ? "Trabajemos"
-                : "Let's Work"}
-            </Link>
+            {!user ? (
+              <Link
+                href="/login"
+                className="rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 px-6 py-3 text-sm font-bold text-black"
+              >
+                Login
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="rounded-full border border-orange-500 px-5 py-3 text-sm font-semibold text-orange-400"
+                >
+                  Dashboard
+                </Link>
+
+                <Link
+                  href="/admin"
+                  className="rounded-full bg-white px-5 py-3 text-sm font-bold text-black"
+                >
+                  Admin
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="rounded-full border border-red-500 px-5 py-3 text-sm font-semibold text-red-400"
+                >
+                  Logout
+                </button>
+              </>
+            )}
           </div>
 
-          {/* Mobile Button */}
+          {/* Mobile */}
           <button
             onClick={() => setOpen(!open)}
             className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white lg:hidden"
@@ -158,40 +200,50 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="fixed inset-0 z-40 bg-black/95 backdrop-blur-2xl lg:hidden">
+        <div className="fixed inset-0 z-40 bg-black/95 lg:hidden">
           <div className="flex min-h-screen flex-col items-center justify-center gap-6 px-6">
             {navigation.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="text-3xl font-black text-white transition hover:text-orange-400"
+                className="text-3xl font-black text-white"
               >
                 {link.label}
               </Link>
             ))}
 
-            <Link
-              href={switchLocale}
-              className="mt-10 rounded-full border border-white/10 px-6 py-3 text-sm font-semibold text-zinc-300"
-            >
-              {locale === "es"
-                ? "Switch to English"
-                : "Cambiar a Español"}
-            </Link>
+            {!user ? (
+              <Link
+                href="/login"
+                className="mt-8 rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 px-8 py-4 font-bold text-black"
+              >
+                Login
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="rounded-full border border-orange-500 px-6 py-3 text-orange-400"
+                >
+                  Dashboard
+                </Link>
 
-            <Link
-              href={
-                locale === "es"
-                  ? "/es/contacto"
-                  : "/en/contact"
-              }
-              className="rounded-full bg-gradient-to-r from-orange-400 to-yellow-500 px-8 py-4 font-bold text-black"
-            >
-              {locale === "es"
-                ? "Trabajemos"
-                : "Let's Work"}
-            </Link>
+                <Link
+                  href="/admin"
+                  className="rounded-full bg-white px-6 py-3 font-bold text-black"
+                >
+                  Admin
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="rounded-full border border-red-500 px-6 py-3 text-red-400"
+                >
+                  Logout
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

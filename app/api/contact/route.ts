@@ -47,7 +47,7 @@ export async function POST(req: Request) {
 
     await resend.emails.send({
       // Dev:
-      from: "CACB Música <onboarding@resend.dev>",
+      from: "CACB Música <contacto@cacbmusica.com>",
       // Cambia a tu email real:
       to: "contacto@cacbmusica.com",
       replyTo: safeEmail,

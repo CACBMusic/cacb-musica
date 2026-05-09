@@ -7,11 +7,11 @@ import Footer from "@/components/layout/footer";
 import { getNews } from "@/lib/news";
 
 export const metadata: Metadata = {
-  title: "News | CACB Música",
-  description: "Official CACB Música news.",
+  title: "Noticias | CACB Música",
+  description: "Noticias oficiales de CACB Música.",
 };
 
-export default async function NewsPage() {
+export default async function NoticiasPage() {
   const news = await getNews();
 
   return (
@@ -23,11 +23,11 @@ export default async function NewsPage() {
         <section className="border-b border-zinc-900 py-28">
           <div className="mx-auto max-w-7xl px-6">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-orange-400">
-              News
+              Noticias
             </p>
 
             <h1 className="text-5xl font-black md:text-7xl">
-              Latest updates
+              Últimas novedades
             </h1>
           </div>
         </section>
@@ -38,7 +38,7 @@ export default async function NewsPage() {
             {news.map((post) => (
               <Link
                 key={post.id}
-                href={`/en/news/${post.slug}`}
+                href={`/es/noticias/${post.slug}`}
                 className="group overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950 transition hover:border-orange-500/50"
               >
                 {/* Cover */}
@@ -58,11 +58,11 @@ export default async function NewsPage() {
                   </p>
 
                   <h2 className="mt-4 text-3xl font-black">
-                    {post.title_en}
+                    {post.title_es}
                   </h2>
 
                   <p className="mt-6 text-zinc-400">
-                    {post.excerpt_en}
+                    {post.excerpt_es}
                   </p>
 
                   <div className="mt-8 flex items-center justify-between">
@@ -71,7 +71,7 @@ export default async function NewsPage() {
                     </span>
 
                     <span className="text-sm font-semibold text-orange-400">
-                      Read →
+                      Leer →
                     </span>
                   </div>
                 </div>

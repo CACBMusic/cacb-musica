@@ -7,11 +7,11 @@ import Footer from "@/components/layout/footer";
 import { artists } from "@/data/artists";
 
 export const metadata: Metadata = {
-  title: "Artists | CACB Música",
-  description: "Official artists from CACB Música.",
+  title: "Artistas | CACB Música",
+  description: "Artistas oficiales de CACB Música.",
 };
 
-export default function ArtistsPage() {
+export default function ArtistasPage() {
   return (
     <>
       <Navbar />
@@ -21,15 +21,15 @@ export default function ArtistsPage() {
         <section className="border-b border-zinc-900 py-28">
           <div className="mx-auto max-w-7xl px-6">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.3em] text-orange-400">
-              Artists
+              Artistas
             </p>
 
             <h1 className="text-5xl font-black md:text-7xl">
-              Our roster
+              Nuestro roster
             </h1>
 
             <p className="mt-6 max-w-2xl text-zinc-400">
-              Meet the artists and projects that are part of CACB Música.
+              Conoce los artistas y proyectos que forman parte de CACB Música.
             </p>
           </div>
         </section>
@@ -40,7 +40,7 @@ export default function ArtistsPage() {
             {artists.map((artist) => (
               <Link
                 key={artist.slug}
-                href={`/en/artists/${artist.slug}`}
+                href={`/es/artistas/${artist.slug}`}
                 className="group overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950 transition hover:border-orange-500/50"
               >
                 {/* Avatar */}
@@ -59,12 +59,12 @@ export default function ArtistsPage() {
                   </p>
 
                   <p className="mt-6 line-clamp-3 text-zinc-400">
-                    {artist.bioEn}
+                    {artist.bioEs}
                   </p>
 
                   <div className="mt-8 flex items-center gap-4 text-sm font-semibold">
                     <span className="text-orange-400 transition group-hover:translate-x-1">
-                      View profile →
+                      Ver perfil →
                     </span>
                   </div>
                 </div>

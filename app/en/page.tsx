@@ -50,7 +50,7 @@ export default function HomeEN() {
     <>
       <Navbar />
 
-      <main className="relative overflow-hidden bg-black text-white">
+      <main className="relative overflow-hidden bg-black text-white pt-32">
         {/* Background */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute left-1/2 top-0 h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-orange-500/20 blur-3xl" />

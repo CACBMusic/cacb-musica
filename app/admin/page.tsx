@@ -21,7 +21,7 @@ export default function AdminPage() {
 
           {/* Right */}
           <div className="flex items-center gap-4">
-            <UserButton afterSignOutUrl="/es" />
+            <UserButton />
 
             <Link
               href="/es"

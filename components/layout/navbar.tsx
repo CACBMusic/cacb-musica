@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -101,23 +102,28 @@ export function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-6 py-4 backdrop-blur-xl">
           {/* Logo */}
           <Link
-            href={locale === "es" ? "/es" : "/en"}
-            className="group flex items-center gap-3"
-          >
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-orange-400 to-yellow-500 font-black text-black">
-              C
-            </div>
+  href="/"
+  className="flex items-center gap-3 transition-opacity hover:opacity-90"
+>
+  <Image
+    src="/logo.svg"
+    alt="CACB Música"
+    width={42}
+    height={42}
+    priority
+    className="rounded-xl object-contain"
+  />
 
-            <div>
-              <p className="text-lg font-black text-white">
-                CACB Música
-              </p>
+  <div className="flex flex-col leading-none">
+    <span className="text-sm font-medium text-zinc-400">
+      CACB
+    </span>
 
-              <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
-                Record Label
-              </p>
-            </div>
-          </Link>
+    <span className="text-lg font-bold tracking-tight text-white">
+      Música
+    </span>
+  </div>
+</Link>
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-2 lg:flex">
